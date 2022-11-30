@@ -1,10 +1,13 @@
 """Models used for Feature Importance calculation."""
 
 # Libraries
+from utils import sort_dictionary_by_value
 from xgboost import XGBClassifier, XGBRegressor
 from sklearn.model_selection import train_test_split 
 from sklearn.metrics import accuracy_score, r2_score
 import pandas as pd
+
+
 
 # Feature Importance for classification models
 def feature_importance_clf(df_input: pd.DataFrame, target_col: str) -> dict:
@@ -58,12 +61,7 @@ def feature_importance_clf(df_input: pd.DataFrame, target_col: str) -> dict:
         output['importances'][att] = imp
 
     # Sort output
-    output['importances'] = {
-        key: val for key, val in sorted(
-            output['importances'].items(), 
-            key=lambda item: item[1],
-        )
-    }
+    output['importances'] = sort_dictionary_by_value(output['importances'])
 
     return output
 
@@ -117,12 +115,7 @@ def feature_importance_reg(df_input: pd.DataFrame, target_col: str) -> dict:
         output['importances'][att] = imp
 
     # Sort output
-    output['importances'] = {
-        key: val for key, val in sorted(
-            output['importances'].items(), 
-            key=lambda item: item[1],
-        )
-    }
+    output['importances'] = sort_dictionary_by_value(output['importances'])
 
     return output
 
