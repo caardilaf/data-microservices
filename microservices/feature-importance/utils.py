@@ -1,5 +1,8 @@
 """Utility functions"""
 
+#Libraries
+import numpy as np
+
 def sort_dictionary_by_value(dict_input: dict) -> dict:
     """
     It sorts a dictionary by value.
@@ -17,8 +20,9 @@ def sort_dictionary_by_value(dict_input: dict) -> dict:
         raise TypeError("--dict_input-- must be dict type.")
     
     valid_types = [isinstance(val, (str, int, float)) for val in dict_input.values()]
-    if not all(valid_types):
-        raise TypeError("--dict_input-- values must be strings, integers or floats.") 
+    valid_types_np = [type(val).__module__ == np.__name__ for val in dict_input.values()]
+    if not any([all(valid_types), all(valid_types_np)]):
+        raise TypeError("--dict_input-- values must be strings, integers, floats or numpy types.") 
 
     first_type = type(list(dict_input.values())[0])
     same_types = [isinstance(val, first_type) for val in dict_input.values()]
