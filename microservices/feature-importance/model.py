@@ -7,6 +7,7 @@ from xgboost import XGBClassifier, XGBRegressor
 from sklearn.model_selection import train_test_split 
 from sklearn.metrics import accuracy_score, r2_score
 import pandas as pd
+from pydantic import ValidationError
 
 # Functions--------------------------------------------------------------------------------------------------
 
@@ -137,19 +138,19 @@ class FeaturesImportancesExtractor():
 
     # Validate input
     if not isinstance(data, pd.DataFrame):
-      raise TypeError("--data-- must be pandas DataFrame type.")
+      raise ValidationError("--data-- must be pandas DataFrame type.")
     
     if not isinstance(target_name, str):
-      raise TypeError("--data-- must be str type.")
+      raise ValidationError("--data-- must be str type.")
 
     if data.empty:
-      raise RuntimeError("--data-- can't be an empty dataframe.")
+      raise ValidationError("--data-- can't be an empty dataframe.")
 
     if len(data.columns) < 2:
-      raise RuntimeError("--data-- must have at least two columns.")
+      raise ValidationError("--data-- must have at least two columns.")
 
     if not target_name in data.columns:
-      raise AttributeError("--target_name-- must be a column name of --data-- dataframe.")
+      raise ValidationError("--target_name-- must be a column name of --data-- dataframe.")
 
     # Assign the data
     self.data = data

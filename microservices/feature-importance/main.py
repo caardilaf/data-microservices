@@ -7,7 +7,7 @@ from sklearn.datasets import load_iris, load_diabetes
 if __name__ == "__main__":
 
     # Data de prueba
-    data = load_diabetes()
+    data = load_iris()
     X = data['data']
     y = data['target']
     df = pd.concat([pd.DataFrame(X), pd.DataFrame(y)], axis=1)
@@ -17,6 +17,6 @@ if __name__ == "__main__":
 
     # Probando la clase
     feature_extractor = FeaturesImportancesExtractor(data=df, target_name='target')
-    importances = feature_extractor.reg_feature_importances()
+    importances = feature_extractor.clf_feature_importances()
 
     print(importances)
