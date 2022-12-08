@@ -5,7 +5,7 @@
 from utils import sort_dictionary_by_value
 from xgboost import XGBClassifier, XGBRegressor
 from sklearn.model_selection import train_test_split 
-from sklearn.metrics import accuracy_score, r2_score
+from sklearn.metrics import matthews_corrcoef, r2_score
 import pandas as pd
 from pydantic import ValidationError
 
@@ -46,7 +46,7 @@ def feature_importance_clf(df_input: pd.DataFrame, target_col: str) -> dict:
 
     # Classification metrics
     y_pred = model.predict(X_test)
-    accuracy = accuracy_score(
+    accuracy = matthews_corrcoef(
         y_test, 
         y_pred,
     )
